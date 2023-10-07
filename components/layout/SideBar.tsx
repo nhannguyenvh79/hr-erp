@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import { Menus } from "@/constants";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const SideBar = () => {
   const [open, setOpen] = useState(true);
-
+  const pathname = usePathname();
   return (
     <nav
       className={` ${
@@ -32,24 +34,26 @@ const SideBar = () => {
           HR System
         </h1>
       </div>
-      <ul className="pt-6">
+      <ul className="pt-6 ">
         {Menus.map((Menu, index) => (
-          <li
-            key={index}
-            className={`flex rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4
+          <li key={index}>
+            <Link
+              href={Menu.path}
+              className={`flex h-12 rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4
               ${Menu.gap ? "mt-9" : "mt-2"} ${
-              index === 0 && "bg-light-white"
-            } `}
-          >
-            <Image
-              width={25}
-              height={25}
-              src={`/assets/${Menu.src}.svg`}
-              alt="icon"
-            />
-            <span className={`truncate origin-left duration-200`}>
-              {Menu.title}
-            </span>
+                Menu.path === pathname && "bg-light-white"
+              } `}
+            >
+              <Image
+                width={25}
+                height={25}
+                src={`/assets/${Menu.src}.svg`}
+                alt="icon"
+              />
+              <span className={`truncate origin-left duration-200`}>
+                {Menu.title}
+              </span>
+            </Link>
           </li>
         ))}
       </ul>

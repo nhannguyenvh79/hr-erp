@@ -27,7 +27,7 @@ const Header = () => {
           name="search"
           id="search"
           type="text"
-          placeholder="Small Input"
+          placeholder="Search..."
           className="px-2 py-1 placeholder-blueGray-300 text-gray-400 relative bg-white  rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10"
         />
         <label
