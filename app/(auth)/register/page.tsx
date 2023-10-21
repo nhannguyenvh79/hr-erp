@@ -3,10 +3,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div
-      className="min-h-screen flex items-center justify-center"
-      style={{ backgroundImage: "linear-gradient(115deg, #9F7AEA, #FEE2FE)" }}
-    >
+    <div className="min-h-screen flex items-center justify-center bg-sky-200">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row w-fit bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
           <div className="w-full py-16 px-12">
@@ -19,40 +16,34 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Firstname"
-                  className="border border-gray-400 py-1 px-2"
+                  className="auth-input"
                 />
                 <input
                   type="text"
                   placeholder="Surname"
-                  className="border border-gray-400 py-1 px-2"
+                  className="auth-input"
                 />
               </div>
               <div className="mt-5">
-                <input
-                  type="text"
-                  placeholder="Email"
-                  className="border border-gray-400 py-1 px-2 w-full"
-                />
+                <input type="text" placeholder="Email" className="auth-input" />
               </div>
               <div className="mt-5">
                 <input
                   type="password"
                   placeholder="Password"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="auth-input"
                 />
               </div>
               <div className="mt-5">
                 <input
                   type="password"
                   placeholder="Confirm Password"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="auth-input"
                 />
               </div>
 
               <div className="my-5">
-                <button className="w-full bg-sky-800 border border-sky-800 text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300">
-                  Register Now
-                </button>
+                <button className="auth-submit-btn">Register Now</button>
               </div>
               <Link href={"/login"} className="font-bold text-black">
                 Click to login

@@ -4,7 +4,7 @@ import { BsSearch } from "react-icons/bs";
 
 const Header = () => {
   return (
-    <header className="w-100 h-20 bg-sky-600 text-white flex flex-row-reverse justify-start items-center px-5 gap-4">
+    <header className="w-100 h-20 bg-sky-600 text-white flex flex-row-reverse justify-start items-center px-5 gap-4 sticky top-0 ">
       <div className="flex justify-center items-center">
         <Image
           src="/assets/logo.png"
