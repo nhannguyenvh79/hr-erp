@@ -8,8 +8,8 @@ const queryClient = new QueryClient();
 
 export function ReduxProviders({ children }: { children: React.ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>{children}</Provider>;
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </Provider>
   );
 }

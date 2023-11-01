@@ -1,18 +1,18 @@
+"use client";
+
+import { RootState } from "@/lib/redux/store";
 import Image from "next/image";
-import React from "react";
 import { BsSearch } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import Account from "../dropdown/Account";
 
 const Header = () => {
+  const { isLogin, userInfo } = useSelector((state: RootState) => state.auth);
+
   return (
-    <header className="w-100 h-20 bg-sky-600 text-white flex flex-row-reverse justify-start items-center px-5 gap-4 sticky top-0 ">
+    <header className="w-100 h-20 bg-sky-600 text-white flex flex-row-reverse justify-start items-center px-5 gap-4 sticky top-0 z-40">
       <div className="flex justify-center items-center">
-        <Image
-          src="/assets/logo.png"
-          alt="logo"
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
+        {isLogin && <Account img={userInfo?.employee?.image} />}
       </div>
 
       <div className="relative">

@@ -1,35 +1,31 @@
+"use client";
+
 import "../globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Header from "@/components/layout/Header";
 import SideBar from "@/components/layout/SideBar";
-import { ReduxProviders } from "@/lib/redux/ReduxProviders";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "ERP",
-  description: "ERP for management HR in the company",
-};
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import LoginPage from "../(auth)/login/page";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { isLogin } = useSelector((state: RootState) => state.auth);
+  if (!isLogin) {
+    return <LoginPage />;
+  }
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ReduxProviders>
-          <div className="flex flex-row">
-            <SideBar />
-            <div className="flex-auto">
-              <Header />
-              <main>{children}</main>
-            </div>
-          </div>
-        </ReduxProviders>
-      </body>
-    </html>
+    <div className="flex flex-row">
+      <SideBar />
+      <div className="flex-auto">
+        <Header />
+        <main>{children}</main>
+      </div>
+    </div>
   );
 }

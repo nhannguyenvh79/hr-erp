@@ -1,8 +1,12 @@
 "use client";
 
+import authAPI from "@/lib/apis/authAPI";
+import { getMe } from "@/lib/redux/authSlice";
 import { useFormik } from "formik";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 interface FormValues {
@@ -12,10 +16,32 @@ interface FormValues {
 }
 
 const Page = () => {
+  const dispatch = useDispatch();
+  const [error, setError] = React.useState("");
+
+  const router = useRouter();
   const initialValues: FormValues = {
     eCode: "",
     password: "",
     isRemember: false,
+  };
+
+  const handleLogin = async (values: FormValues) => {
+    const data = {
+      eCode: values.eCode,
+      password: values.password,
+    };
+    try {
+      const resLogin = await authAPI.login(data);
+      localStorage.setItem("erptk", resLogin.data.accessToken);
+
+      const resGetMe = await authAPI.getMe();
+      dispatch(getMe(resGetMe.data.userInfo));
+
+      router.push("/");
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   const formik = useFormik({
@@ -31,10 +57,24 @@ const Page = () => {
       isRemember: Yup.boolean(),
     }),
 
-    onSubmit: async (values: FormValues) => {
-      console.log(values);
-    },
+    onSubmit: handleLogin,
   });
+
+  useEffect(() => {
+    const autoLogin = async () => {
+      if (localStorage.getItem("erptk")) {
+        try {
+          const resGetMe = await authAPI.getMe();
+          dispatch(getMe(resGetMe.data.userInfo));
+
+          router.push("/");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    autoLogin();
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-sky-200">
@@ -49,12 +89,13 @@ const Page = () => {
             Welcom back! Please enter your details
           </span>
           <div className="py-4 relative">
-            <span className="mb-2 text-md">Employee ID</span>
+            <span className="mb-2 text-sm">Username or your ID:</span>
             <input
               type="text"
-              className="auth-input"
+              className="auth-input input max-w-none text-sm"
               name="eCode"
               id="eCode"
+              placeholder="Enter your id or username"
               value={formik.values.eCode}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -64,12 +105,13 @@ const Page = () => {
             )}
           </div>
           <div className="py-4 relative">
-            <span className="mb-2 text-md">Password</span>
+            <span className="mb-2 text-sm">Password:</span>
             <input
               type="password"
               name="password"
               id="password"
-              className="auth-input"
+              className="auth-input input max-w-none text-sm"
+              placeholder="Enter your password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -101,6 +143,7 @@ const Page = () => {
               Register
             </Link>
           </div>
+          <p className="text-center text-sm text-red-500 p-2">{error}</p>
         </form>
       </div>
     </div>

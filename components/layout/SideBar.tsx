@@ -57,6 +57,13 @@ const SideBar = () => {
           </li>
         ))}
       </ul>
+      <p
+        className={`text-xs text-center text-gray-50 p-1 absolute bottom-0 left-0 right-0 ease-in-out duration-200 ${
+          open ? "opacity-100" : "opacity-0"
+        } trans`}
+      >
+        Copyright © 2023 - HR System
+      </p>
     </nav>
   );
 };
